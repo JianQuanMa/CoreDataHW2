@@ -58,6 +58,7 @@ final class CityManager {
         let coreCity = CoreCity(entity: entity, insertInto: context)
         
         //KVC - Key Value Coding - accessing properties by a string
+        guard isUnique(city, coreCity) else {return}
         coreCity.setValue(city.name, forKey: "name")
         coreCity.setValue(city.state, forKey: "state")
         coreCity.setValue(city.coordinates.latitude, forKey: "latitude")
@@ -72,7 +73,20 @@ final class CityManager {
         
     }
     
+    private func isUnique(_ city : City, _ coreCity : CoreCity) -> Bool{
+        //let cities : [City] = load()
+      //  cities.forEach(<#T##body: (City) throws -> Void##(City) throws -> Void#>)
+        return true
+    }
+    
     func load() -> [City] {
+        persistentContainer.loadPersistentStores { storeDescription, error in
+            self.persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            
+            if let error = error {
+                print("Unresolved error \(error)")
+            }
+        }
         
         //access the entities in CoreData you need a fetch request
         let fetchRequest = NSFetchRequest<CoreCity>(entityName: "CoreCity")
