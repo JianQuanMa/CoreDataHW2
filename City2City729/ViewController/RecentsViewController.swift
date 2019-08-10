@@ -19,7 +19,7 @@ class RecentsViewController: UIViewController {
             recentsTableView.reloadData()
         }
     }
-    lazy var reversed : [City] = cities.reversed()
+   // lazy var mostRecentTen : [City] = cities.reversed().suffix(10)
     
     
     override func viewDidLoad() {
@@ -55,7 +55,8 @@ class RecentsViewController: UIViewController {
 extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cities.count
+     //   return cities.count
+        return cities.count > 10 ? 10 : cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,10 +65,18 @@ extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
 //        let city = citiesReversed[indexPath.row]
 //        cell.city = city
         
-        if (cities.count != 0){
-            let city = cities[cities.count - 1 - indexPath.row]
-            cell.city = city
-        }
+//        if (cities.count != 0){
+//            if(cities.count > 10){
+//                let mostRecentTen : [City] = cities.reversed().suffix(10)
+//
+//            }
+//            let city = cities[cities.count - 1 - indexPath.row]
+//            cell.city = city
+//        }
+        let reversedCities : [City] = cities.reversed()
+        var citiesReversed : [City] = cities.count > 10 ? Array(reversedCities.prefix(10)) : reversedCities
+                let city = citiesReversed[indexPath.row]
+                cell.city = city
         return cell
     }
     
