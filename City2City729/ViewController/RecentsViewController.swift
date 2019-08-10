@@ -12,11 +12,15 @@ class RecentsViewController: UIViewController {
     
     @IBOutlet weak var recentsTableView: UITableView!
     
+   
+    
     var cities = [City]() {
         didSet {
             recentsTableView.reloadData()
         }
     }
+    lazy var reversed : [City] = cities.reversed()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +49,7 @@ class RecentsViewController: UIViewController {
     @objc func rightBarButtonDidTapped(sender: UIBarButtonItem) {
        manager.deleteAllData()
         cities = []
-       
     }
-    
-
-
 }
 
 extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -60,14 +60,23 @@ extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableCell.identifier, for: indexPath) as! CityTableCell
+//        var citiesReversed : [City] = cities.reversed()
+//        let city = citiesReversed[indexPath.row]
+//        cell.city = city
         
-        let city = cities[indexPath.row]
-        cell.city = city
-        
+        if (cities.count != 0){
+            let city = cities[cities.count - 1 - indexPath.row]
+            cell.city = city
+        }
         return cell
     }
     
-    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            cities.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
