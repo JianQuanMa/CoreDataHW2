@@ -15,9 +15,10 @@ class City {
     let state: String
     let population: String
     let coordinates: CLLocationCoordinate2D
+    var time : Calendar
     
     init?(from dict: [String:Any]) {
-        
+        self.time = Calendar.current
         guard let city = dict["city"] as? String,
             let long = dict["longitude"] as? Double,
             let lat = dict["latitude"] as? Double,
@@ -38,29 +39,23 @@ class City {
     }
     
     init(from core: CoreCity) {
-        
         let name = core.value(forKey: "name") as! String
         let state = core.value(forKey: "state") as! String
         let lat = core.value(forKey: "latitude") as! Double
         let long = core.value(forKey: "longitude") as! Double
         let population = core.value(forKey: "population") as! String
-        
+        self.time = Calendar.current
         self.name = name
         self.state = state
         self.population = population
         self.coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
-        
     }
-    
-    
 }
 
 
 extension City: CustomStringConvertible {
-    
     var description: String {
         return "\(name), \(state)"
     }
-    
 }
