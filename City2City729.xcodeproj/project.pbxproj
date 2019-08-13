@@ -29,6 +29,7 @@
 		04E8B21422F9C6B200E0F377 /* CityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8B21322F9C6B200E0F377 /* CityManager.swift */; };
 		4E1BD5A023021BC500700443 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1BD59E23021BC500700443 /* RecentTableViewCell.swift */; };
 		4E1BD5A123021BC500700443 /* RecentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E1BD59F23021BC500700443 /* RecentTableViewCell.xib */; };
+		4E1BD5A32302529000700443 /* City+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1BD5A22302529000700443 /* City+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		04E8B21322F9C6B200E0F377 /* CityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityManager.swift; sourceTree = "<group>"; };
 		4E1BD59E23021BC500700443 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		4E1BD59F23021BC500700443 /* RecentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentTableViewCell.xib; sourceTree = "<group>"; };
+		4E1BD5A22302529000700443 /* City+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				04BF7F5622FC7912002ACEAA /* String+Extension.swift */,
 				04BF7F5822FC7A78002ACEAA /* ViewController+Extension.swift */,
+				4E1BD5A22302529000700443 /* City+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E1BD5A32302529000700443 /* City+Extension.swift in Sources */,
 				04E8B1F222F9A88C00E0F377 /* SearchViewController.swift in Sources */,
 				4E1BD5A023021BC500700443 /* RecentTableViewCell.swift in Sources */,
 				0434EA5522FDAFA7004537CB /* AlertViewController.swift in Sources */,

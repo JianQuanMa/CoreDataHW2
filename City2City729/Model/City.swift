@@ -52,7 +52,6 @@ class City {
         self.coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
     }
-    
 }
 
 extension City: CustomStringConvertible {

@@ -71,13 +71,9 @@ final class CityManager {
         print("CoreData City Count: \(cities.count)")
         return cities
     }
-    
-   
-    
-    
-    
+
     func save(_ city: City) {
-        
+        checkFor(city)
         let entity = NSEntityDescription.entity(forEntityName: "CoreCity", in: context)!
         let coreCity = CoreCity(entity: entity, insertInto: context)
         
@@ -96,6 +92,28 @@ final class CityManager {
         print("Saved City to CoreData: \(city.name), \(city.state)")
         
     }
+    
+//    func save(_ city: City) {
+//
+//        checkFor(city)
+//
+//        let entity = NSEntityDescription.entity(forEntityName: "CoreCity", in: context)!
+//        let coreCity = CoreCity(entity: entity, insertInto: context)
+//
+//        //KVC - Key Value Coding - accessing properties by a string
+//        coreCity.setValue(city.name, forKey: "name")
+//        coreCity.setValue(city.state, forKey: "state")
+//        coreCity.setValue(city.coordinates.latitude, forKey: "latitude")
+//        coreCity.setValue(city.coordinates.longitude, forKey: "longitude")
+//        coreCity.setValue(city.population, forKey: "population")
+//
+//
+//        //everytime you make changes, you MUST save the context or the changes will NOT persist
+//        saveContext()
+//
+//        print("Saved City to CoreData: \(city.name), \(city.state)")
+//
+//    }
     
     
     func checkFor(_ city: City) {
@@ -214,17 +232,6 @@ final class CityManager {
                 print("Couldn't Serialize Data: \(error.localizedDescription)")
             }
         }
-    }
-    
-    
-}
-extension City: Comparable{
-    static func < (lhs: City, rhs: City) -> Bool {
-        return rhs.date.timeIntervalSince(lhs.date) > 0
-    }
-    
-    static func == (lhs: City, rhs: City) -> Bool {
-       return lhs.date.description == rhs.date.description
     }
     
     
