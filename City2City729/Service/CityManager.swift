@@ -14,7 +14,7 @@ typealias CityHandler = ([City]) -> Void //nickname, often used with closures
 /* Singleton
  
  is a single instance throughout the life span of an app, and it has a shared instance that everyone must use to interact with the object
-
+ 
  */
 
 let manager = CityManager.shared
@@ -33,12 +33,12 @@ final class CityManager {
      2. NSManagedObjectContext - place where all editing occurs - Save, Delete, Modify Entity
      3. PersistentStoreCoordinator - How entities are saved
      4. NSPersistentContainer - where all the enetities are stored
-    */
+     */
     
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
- 
+    
     
     lazy var persistentContainer: NSPersistentContainer = {
         
@@ -71,20 +71,20 @@ final class CityManager {
         print("CoreData City Count: \(cities.count)")
         return cities
     }
-
+    
     func save(_ city: City) {
         checkFor(city)
         let entity = NSEntityDescription.entity(forEntityName: "CoreCity", in: context)!
         let coreCity = CoreCity(entity: entity, insertInto: context)
         
         //KVC - Key Value Coding - accessing properties by a string
-     
+        let date = Date()
         coreCity.setValue(city.name, forKey: "name")
         coreCity.setValue(city.state, forKey: "state")
         coreCity.setValue(city.coordinates.latitude, forKey: "latitude")
         coreCity.setValue(city.coordinates.longitude, forKey: "longitude")
         coreCity.setValue(city.population, forKey: "population")
-        coreCity.setValue(city.date, forKey: "date")
+        coreCity.setValue(date, forKey: "date")
         
         //everytime you make changes, you MUST save the context or the changes will NOT persist
         saveContext()
@@ -92,28 +92,6 @@ final class CityManager {
         print("Saved City to CoreData: \(city.name), \(city.state)")
         
     }
-    
-//    func save(_ city: City) {
-//
-//        checkFor(city)
-//
-//        let entity = NSEntityDescription.entity(forEntityName: "CoreCity", in: context)!
-//        let coreCity = CoreCity(entity: entity, insertInto: context)
-//
-//        //KVC - Key Value Coding - accessing properties by a string
-//        coreCity.setValue(city.name, forKey: "name")
-//        coreCity.setValue(city.state, forKey: "state")
-//        coreCity.setValue(city.coordinates.latitude, forKey: "latitude")
-//        coreCity.setValue(city.coordinates.longitude, forKey: "longitude")
-//        coreCity.setValue(city.population, forKey: "population")
-//
-//
-//        //everytime you make changes, you MUST save the context or the changes will NOT persist
-//        saveContext()
-//
-//        print("Saved City to CoreData: \(city.name), \(city.state)")
-//
-//    }
     
     
     func checkFor(_ city: City) {
@@ -132,9 +110,14 @@ final class CityManager {
             remove(cities.first!)
         }
         
-        for cty in cities {
-            if cty.name == city.name && cty.state! == city.state {
-                remove(cty)
+//        for cty in cities {
+//            if cty.name == city.name && cty.state! == city.state {
+//                remove(cty)
+//            }
+//        }
+        cities.forEach{
+            if($0.name == city.name && $0.state! == city.state){
+                remove($0)
             }
         }
         
@@ -172,7 +155,7 @@ final class CityManager {
     /* Closures
      1. Non-Escaping - default - has the same life span of the function that it resides in
      2. escaping - gives a seperate life span to the closure, so that it can wait around to capture the async value
-    */
+     */
     
     func getCities(_ completion: @escaping CityHandler) {
         
@@ -203,7 +186,7 @@ final class CityManager {
          async - is a concurrent queue - multiple tasks are being executed at the same time
          sync - is a serial queue - is one at a time, each task in queue must be completed before the next one
          
-        */
+         */
         
         var cities = [City]()
         
@@ -223,7 +206,6 @@ final class CityManager {
                         cities.append(city)
                     }
                 }
-        
                 completion(cities)
                 
                 
