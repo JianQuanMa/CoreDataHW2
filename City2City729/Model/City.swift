@@ -15,6 +15,7 @@ class City {
     let state: String
     let population: String
     let coordinates: CLLocationCoordinate2D
+    var date : Date
     
     init?(from dict: [String:Any]) {
         
@@ -28,8 +29,7 @@ class City {
         
         //if you a key is optional you must state that the property is optional and leave it out of the guard statement, to allow for it to be nil and continue with the object init
         
-//        let state = dict["state"] as? String
-        
+        self.date = Date()
         self.name = city
         self.state = state
         self.population = pop
@@ -44,18 +44,16 @@ class City {
         let lat = core.value(forKey: "latitude") as! Double
         let long = core.value(forKey: "longitude") as! Double
         let population = core.value(forKey: "population") as! String
-        
+        let date = core.value(forKey: "date") as! Date
+        self.date = date
         self.name = name
         self.state = state
         self.population = population
         self.coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
-        
     }
     
-    
 }
-
 
 extension City: CustomStringConvertible {
     

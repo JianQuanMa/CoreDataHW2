@@ -85,8 +85,6 @@ extension MapViewController: MKMapViewDelegate {
         case false:
             annotationView?.annotation = annotation
         }
-        
-        
         return annotationView
     }
     

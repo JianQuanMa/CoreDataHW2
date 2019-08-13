@@ -38,6 +38,7 @@ final class CityManager {
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
+ 
     
     lazy var persistentContainer: NSPersistentContainer = {
         
@@ -52,6 +53,29 @@ final class CityManager {
         return container
     }()
     
+    func load() -> [City] {
+        
+        //access the entities in CoreData you need a fetch request
+        let fetchRequest = NSFetchRequest<CoreCity>(entityName: "CoreCity")
+        
+        var cities = [City]()
+        
+        do {
+            let coreCities = try context.fetch(fetchRequest)
+            cities = coreCities.map({ City(from: $0) }) //map - goes over each element in array and performs closure
+            cities.sort{ $0 > $1}
+        } catch {
+            print("Couldn't Fetch Core: \(error.localizedDescription)")
+        }
+        
+        print("CoreData City Count: \(cities.count)")
+        return cities
+    }
+    
+   
+    
+    
+    
     func save(_ city: City) {
         
         let entity = NSEntityDescription.entity(forEntityName: "CoreCity", in: context)!
@@ -64,7 +88,7 @@ final class CityManager {
         coreCity.setValue(city.coordinates.latitude, forKey: "latitude")
         coreCity.setValue(city.coordinates.longitude, forKey: "longitude")
         coreCity.setValue(city.population, forKey: "population")
-        
+        coreCity.setValue(city.date, forKey: "date")
         
         //everytime you make changes, you MUST save the context or the changes will NOT persist
         saveContext()
@@ -73,34 +97,36 @@ final class CityManager {
         
     }
     
-  
     
-    func load() -> [City] {
-        persistentContainer.loadPersistentStores { storeDescription, error in
-            self.persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            
-            if let error = error {
-                print("Unresolved error \(error)")
-            }
-        }
+    func checkFor(_ city: City) {
         
-        //access the entities in CoreData you need a fetch request
-        let fetchRequest = NSFetchRequest<CoreCity>(entityName: "CoreCity")
+        let fetch = NSFetchRequest<CoreCity>(entityName: "CoreCity")
         
-        var cities = [City]()
+        var cities = [CoreCity]()
         
         do {
-            let coreCities = try context.fetch(fetchRequest)
-            cities = coreCities.map({ City(from: $0) }) //map - goes over each element in array and performs closure
-            
+            cities = try context.fetch(fetch)
         } catch {
             print("Couldn't Fetch Core: \(error.localizedDescription)")
         }
         
-        print("CoreData City Count: \(cities.count)")
-        return cities
+        if cities.count > 9 {
+            remove(cities.first!)
+        }
+        
+        for cty in cities {
+            if cty.name == city.name && cty.state! == city.state {
+                remove(cty)
+            }
+        }
+        
     }
     
+    private func remove(_ city: CoreCity) {
+        print("Deleted CoreCity: \(city.name!), \(city.state!)")
+        context.delete(city)
+        saveContext()
+    }
     
     private func saveContext() {
         do {
@@ -188,6 +214,17 @@ final class CityManager {
                 print("Couldn't Serialize Data: \(error.localizedDescription)")
             }
         }
+    }
+    
+    
+}
+extension City: Comparable{
+    static func < (lhs: City, rhs: City) -> Bool {
+        return rhs.date.timeIntervalSince(lhs.date) > 0
+    }
+    
+    static func == (lhs: City, rhs: City) -> Bool {
+       return lhs.date.description == rhs.date.description
     }
     
     

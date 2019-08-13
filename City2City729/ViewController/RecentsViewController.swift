@@ -12,13 +12,19 @@ class RecentsViewController: UIViewController {
     
     @IBOutlet weak var recentsTableView: UITableView!
     
-   
+    var date : Date? = nil
     
     var cities = [City]() {
         didSet {
+            date = Date()
             recentsTableView.reloadData()
         }
     }
+    //    var date : Date! {
+    //        didSet {
+    //            visitedTimeLabel.text = date.description
+    //        }
+    //    }
    // lazy var mostRecentTen : [City] = cities.reversed().suffix(10)
     
     
@@ -37,7 +43,7 @@ class RecentsViewController: UIViewController {
     
     private func setupRecents() {
         
-        recentsTableView.register(UINib(nibName: CityTableCell.identifier, bundle: Bundle.main), forCellReuseIdentifier: CityTableCell.identifier)
+        recentsTableView.register(UINib(nibName: RecentTableViewCell.identifier, bundle: Bundle.main), forCellReuseIdentifier: RecentTableViewCell.identifier)
         recentsTableView.tableFooterView = UIView(frame: .zero)
 
     }
@@ -60,23 +66,10 @@ extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CityTableCell.identifier, for: indexPath) as! CityTableCell
-//        var citiesReversed : [City] = cities.reversed()
-//        let city = citiesReversed[indexPath.row]
-//        cell.city = city
-        
-//        if (cities.count != 0){
-//            if(cities.count > 10){
-//                let mostRecentTen : [City] = cities.reversed().suffix(10)
-//
-//            }
-//            let city = cities[cities.count - 1 - indexPath.row]
-//            cell.city = city
-//        }
-        let reversedCities : [City] = cities.reversed()
-        var citiesReversed : [City] = cities.count > 10 ? Array(reversedCities.prefix(10)) : reversedCities
-                let city = citiesReversed[indexPath.row]
-                cell.city = city
+          let cell = tableView.dequeueReusableCell(withIdentifier: RecentTableViewCell.identifier, for: indexPath) as! RecentTableViewCell
+
+        let city = cities[indexPath.row]
+        cell.city = city
         return cell
     }
     
@@ -86,10 +79,6 @@ extension RecentsViewController: UITableViewDelegate, UITableViewDataSource {
 //            tableView.deleteRows(at: [indexPath], with: .fade)
 //        }
 //    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

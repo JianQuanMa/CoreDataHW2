@@ -20,24 +20,28 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-fV-R00">
-                        <rect key="frame" x="16" y="11" width="278" height="44.5"/>
+                        <rect key="frame" x="16" y="11" width="278" height="53"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Atlanta, Georgia" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWN-sR-etR">
-                                <rect key="frame" x="0.0" y="0.0" width="278" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="278" height="24.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Population: 1, 500, 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iww-ir-JeN">
-                                <rect key="frame" x="0.0" y="26.5" width="278" height="18"/>
+                                <rect key="frame" x="0.0" y="31.5" width="278" height="21.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="iww-ir-JeN" firstAttribute="top" secondItem="tWN-sR-etR" secondAttribute="bottom" id="ehR-XO-Lho"/>
+                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="IxT-fV-R00" secondAttribute="bottom" id="8Vx-WA-WcO"/>
                     <constraint firstItem="IxT-fV-R00" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Kjm-Bn-jee"/>
                     <constraint firstAttribute="trailingMargin" secondItem="IxT-fV-R00" secondAttribute="trailing" constant="10" id="kwv-EM-XCp"/>
                     <constraint firstItem="IxT-fV-R00" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="rP9-4w-fuT"/>
